@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stopsoo.meltube.mappers.MusicMapper">
+    <insert id="insertMusic"
+            parameterType="com.stopsoo.meltube.entities.MusicEntity">
+        INSERT INTO `meltube`.`musics` (`user_email`, `artist`, `album`, `release_date`, `genre`, `name`, `lyrics`, `cover_data`, `cover_content_type`, `cover_file_name`, `youtube_id`, `status`, `created_at`, `updated_at`, `is_deleted`)
+        VALUES (#{userEmail}, #{artist}, #{album}, #{releaseDate}, #{genre}, #{name}, #{lyrics}, #{coverData}, #{coverContentType}, #{coverFileName}, #{youtubeId}, #{status}, #{createdAt}, #{updatedAt}, #{isDeleted})
+    </insert>
+
+    <select id="selectMusicByIndex"
+            resultType="com.stopsoo.meltube.entities.MusicEntity">
+        SELECT `index`              AS `index`,
+               `user_email`         AS `userEmail`,
+               `artist`             AS `artist`,
+               `album`              AS `album`,
+               `release_date`       AS `releaseDate`,
+               `genre`              AS `genre`,
+               `name`               AS `name`,
+               `lyrics`             AS `lyrics`,
+           <if test="includeCover == true">
+               `cover_data`         AS `coverData`,
+               `cover_content_type` AS `coverContentType`,
+               `cover_file_name`    AS `coverFileName`,
+           </if>
+               `youtube_id`         AS `youtubeId`,
+               `status`             AS `status`,
+               `created_at`         AS `createdAt`,
+               `updated_at`         AS `updatedAt`,
+               `is_deleted`         AS `isDeleted`
+        FROM `meltube`.`musics`
+        WHERE `index` = #{index}
+        LIMIT 1
+    </select>
+
+    <select id="selectMusicByYoutubeId"
+            resultType="com.stopsoo.meltube.entities.MusicEntity">
+        SELECT `index`              AS `index`,
+               `user_email`         AS `userEmail`,
+               `artist`             AS `artist`,
+               `album`              AS `album`,
+               `release_date`       AS `releaseDate`,
+               `genre`              AS `genre`,
+               `name`               AS `name`,
+               `lyrics`             AS `lyrics`,
+               `youtube_id`         AS `youtubeId`,
+               `status`             AS `status`,
+               `created_at`         AS `createdAt`,
+               `updated_at`         AS `updatedAt`,
+               `is_deleted`         AS `isDeleted`
+        FROM `meltube`.`musics`
+        WHERE `youtube_id` = #{youtubeId}
+          AND `is_deleted` = FALSE
+        LIMIT 1
+    </select>
+
+    <select id="selectMusics"
+            resultType="com.stopsoo.meltube.entities.MusicEntity">
+        SELECT `index`              AS `index`,
+               `user_email`         AS `userEmail`,
+               `artist`             AS `artist`,
+               `album`              AS `album`,
+               `release_date`       AS `releaseDate`,
+               `genre`              AS `genre`,
+               `name`               AS `name`,
+               `lyrics`             AS `lyrics`,
+               <if test="includeCover == true">
+               `cover_data`         AS `coverData`,
+               `cover_content_type` AS `coverContentType`,
+               `cover_file_name`    AS `coverFileName`,
+               </if>
+               `youtube_id`         AS `youtubeId`,
+               `status`             AS `status`,
+               `created_at`         AS `createdAt`,
+               `updated_at`         AS `updatedAt`,
+               `is_deleted`         AS `isDeleted`
+        FROM `meltube`.`musics`
+        ORDER BY `index` DESC
+    </select>
+
+    <select id="selectMusicsByUserEmail"
+            resultType="com.stopsoo.meltube.entities.MusicEntity">
+        SELECT `index`              AS `index`,
+               `user_email`         AS `userEmail`,
+               `artist`             AS `artist`,
+               `album`              AS `album`,
+               `release_date`       AS `releaseDate`,
+               `genre`              AS `genre`,
+               `name`               AS `name`,
+               `lyrics`             AS `lyrics`,
+               `youtube_id`         AS `youtubeId`,
+               `status`             AS `status`,
+               `created_at`         AS `createdAt`,
+               `updated_at`         AS `updatedAt`,
+               `is_deleted`         AS `isDeleted`
+        FROM `meltube`.`musics`
+        WHERE `user_email` = #{userEmail}
+          AND `is_deleted` = FALSE
+        ORDER BY `index` DESC
+    </select>
+
+    <select id="selectMusicVoByUserEmailAndIndex"
+            resultType="com.stopsoo.meltube.vos.MusicVo">
+        SELECT `T_O`.`index`                                                      AS `index`,
+               `T_O`.`user_email`                                                 AS `userEmail`,
+               `T_O`.`artist`                                                     AS `artist`,
+               `T_O`.`album`                                                      AS `album`,
+               `T_O`.`release_date`                                               AS `releaseDate`,
+               `T_O`.`genre`                                                      AS `genre`,
+               `T_O`.`name`                                                       AS `name`,
+               `T_O`.`lyrics`                                                     AS `lyrics`,
+               `T_O`.`youtube_id`                                                 AS `youtubeId`,
+               `T_O`.`status`                                                     AS `status`,
+               `T_O`.`created_at`                                                 AS `createdAt`,
+               `T_O`.`updated_at`                                                 AS `updatedAt`,
+               `T_O`.`is_deleted`                                                 AS `isDeleted`,
+               (SELECT COUNT(0)
+                FROM `meltube`.`music_user_likes` AS `T_I`
+                WHERE `T_O`.`index` = `T_I`.`music_index`)                        AS `likeCount`,
+               (SELECT COUNT(0) = 1
+                FROM `meltube`.`music_user_likes` AS `T_I`
+                WHERE `T_O`.`index` = `T_I`.`music_index`
+                  AND `T_I`.`user_email` = #{userEmail})                          AS `isLiked`
+        FROM `meltube`.`musics` AS `T_O`
+        WHERE `T_O`.`index` = #{index}
+          AND `T_O`.`is_deleted` = FALSE
+    </select>
+
+    <select id="selectMusicVosByUserEmailAndKeyword"
+            resultType="com.stopsoo.meltube.vos.MusicVo">
+        SELECT `T_O`.`index`                                                      AS `index`,
+               `T_O`.`user_email`                                                 AS `userEmail`,
+               `T_O`.`artist`                                                     AS `artist`,
+               `T_O`.`album`                                                      AS `album`,
+               `T_O`.`release_date`                                               AS `releaseDate`,
+               `T_O`.`genre`                                                      AS `genre`,
+               `T_O`.`name`                                                       AS `name`,
+               `T_O`.`lyrics`                                                     AS `lyrics`,
+               `T_O`.`youtube_id`                                                 AS `youtubeId`,
+               `T_O`.`status`                                                     AS `status`,
+               `T_O`.`created_at`                                                 AS `createdAt`,
+               `T_O`.`updated_at`                                                 AS `updatedAt`,
+               `T_O`.`is_deleted`                                                 AS `isDeleted`,
+               (SELECT COUNT(0)
+                FROM `meltube`.`music_user_likes` AS `T_I`
+                WHERE `T_O`.`index` = `T_I`.`music_index`)                        AS `likeCount`,
+               (SELECT COUNT(0) = 1
+                FROM `meltube`.`music_user_likes` AS `T_I`
+                WHERE `T_O`.`index` = `T_I`.`music_index`
+                  AND `T_I`.`user_email` = #{userEmail})                          AS `isLiked`,
+               IF(REPLACE(`T_O`.`name`, ' ', '')
+                      LIKE CONCAT('%', REPLACE(#{keyword}, ' ', ''), '%'), 100, 0) +
+               IF(REPLACE(`T_O`.`artist`, ' ', '')
+                      LIKE CONCAT('%', REPLACE(#{keyword}, ' ', ''), '%'), 50, 0) +
+               IF(REPLACE(`T_O`.`album`, ' ', '')
+                      LIKE CONCAT('%', REPLACE(#{keyword}, ' ', ''), '%'), 25, 0) +
+               IF(REPLACE(`T_O`.`lyrics`, ' ', '')
+                      LIKE CONCAT('%', REPLACE(#{keyword}, ' ', ''), '%'), 10, 0) AS `_order_score`
+        FROM `meltube`.`musics` AS `T_O`
+        WHERE (REPLACE(`T_O`.`name`, ' ', '')
+                   LIKE CONCAT('%', REPLACE(#{keyword}, ' ', ''), '%')
+            OR REPLACE(`T_O`.`artist`, ' ', '')
+                   LIKE CONCAT('%', REPLACE(#{keyword}, ' ', ''), '%')
+            OR REPLACE(`T_O`.`album`, ' ', '')
+                   LIKE CONCAT('%', REPLACE(#{keyword}, ' ', ''), '%')
+            OR REPLACE(`T_O`.`lyrics`, ' ', '')
+                   LIKE CONCAT('%', REPLACE(#{keyword}, ' ', ''), '%'))
+          AND `T_O`.`is_deleted` = FALSE
+        ORDER BY `_order_score` DESC
+    </select>
+
+    <select id="selectLikedMusicVosByUserEmail"
+            resultType="com.stopsoo.meltube.vos.MusicVo">
+        SELECT *
+        FROM (SELECT `T_O`.`index`                                                      AS `index`,
+                     `T_O`.`user_email`                                                 AS `userEmail`,
+                     `T_O`.`artist`                                                     AS `artist`,
+                     `T_O`.`album`                                                      AS `album`,
+                     `T_O`.`release_date`                                               AS `releaseDate`,
+                     `T_O`.`genre`                                                      AS `genre`,
+                     `T_O`.`name`                                                       AS `name`,
+                     `T_O`.`lyrics`                                                     AS `lyrics`,
+                     `T_O`.`youtube_id`                                                 AS `youtubeId`,
+                     `T_O`.`status`                                                     AS `status`,
+                     `T_O`.`created_at`                                                 AS `createdAt`,
+                     `T_O`.`updated_at`                                                 AS `updatedAt`,
+                     `T_O`.`is_deleted`                                                 AS `isDeleted`,
+                     (SELECT COUNT(0)
+                      FROM `meltube`.`music_user_likes` AS `T_I`
+                      WHERE `T_O`.`index` = `T_I`.`music_index`)                        AS `likeCount`,
+                     (SELECT COUNT(0) = 1
+                      FROM `meltube`.`music_user_likes` AS `T_I`
+                      WHERE `T_O`.`index` = `T_I`.`music_index`
+                        AND `T_I`.`user_email` = #{userEmail})                          AS `isLiked`
+              FROM `meltube`.`musics` AS `T_O`
+              WHERE `T_O`.`is_deleted` = FALSE) AS `T_I`
+        WHERE `T_I`.`isLiked` = TRUE
+    </select>
+
+    <update id="updateMusic">
+        UPDATE `meltube`.`musics`
+        SET `user_email`         = #{music.userEmail},
+            `artist`             = #{music.artist},
+            `album`              = #{music.album},
+            `release_date`       = #{music.releaseDate},
+            `genre`              = #{music.genre},
+            `name`               = #{music.name},
+            `lyrics`             = #{music.lyrics},
+            <if test="includeCover == true">
+            `cover_data`         = #{music.coverData},
+            `cover_content_type` = #{music.coverContentType},
+            `cover_file_name`    = #{music.coverFileName},
+            </if>
+            `youtube_id`         = #{music.youtubeId},
+            `status`             = #{music.status},
+            `created_at`         = #{music.createdAt},
+            `updated_at`         = #{music.updatedAt},
+            `is_deleted`         = #{music.isDeleted}
+        WHERE `index` = #{music.index}
+        LIMIT 1
+    </update>
+</mapper>

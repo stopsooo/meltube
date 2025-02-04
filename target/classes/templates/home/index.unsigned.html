@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Meltube</title>
+    <link rel="shortcut icon" th:href="@{'/assets/images/favicon.ico'}">
+    <link rel="stylesheet" type="text/css" th:href="@{'/assets/styles/common.css'}">
+    <link rel="stylesheet" type="text/css" th:href="@{'/assets/styles/index.unsigned.css'}">
+    <script type="text/javascript" th:src="@{'/assets/scripts/common.js'}"></script>
+    <script defer type="text/javascript" th:src="@{'/assets/scripts/index.unsigned.js'}"></script>
+</head>
+<body>
+<div class="cover" id="cover"></div>
+<main class="-spring" id="main">
+    <div class="content">
+        <img alt="Meltube" class="logo" th:src="@{'/assets/images/_logo.png'}">
+        <form novalidate class="login-form" id="loginForm">
+            <h2 class="title">로그인</h2>
+            <label class="--obj-label" data-id="email">
+                <span class="_text">이메일</span>
+                <input autofocus autocomplete="email" class="_field --obj-field -light" maxlength="50" minlength="8" name="email" spellcheck="false" type="email">
+                <span class="_warning">올바른 이메일을 입력해 주세요.</span>
+            </label>
+            <label class="--obj-label" data-id="password">
+                <span class="_text">비밀번호</span>
+                <input autofocus autocomplete="password" class="_field --obj-field -light" maxlength="50" minlength="6" name="password" spellcheck="false" type="password">
+                <span class="_warning">올바른 비밀번호를 입력해 주세요.</span>
+            </label>
+            <label class="--obj-check-label -light">
+                <input class="_input" name="rememberEmail" type="checkbox">
+                <span class="_box"></span>
+                <span class="_text">이메일을 기억합니다.</span>
+            </label>
+            <button class="--obj-button -color-primary">로그인</button>
+            <ul class="menu">
+                <li class="item">
+                    <span class="text">아직 계정이 없으신가요?</span>
+                    <a class="link" href="#" rel="register">회원가입</a>
+                </li>
+                <li class="item">
+                    <span class="text">계정 정보를 잊으셨나요?</span>
+                    <a class="link" href="#" rel="recover">계정 찾기</a>
+                </li>
+            </ul>
+        </form>
+    </div>
+</main>
+<form novalidate class="register-form" id="registerForm">
+    <h2 class="title">회원가입</h2>
+    <label class="--obj-label" data-id="email">
+        <span class="_text">이메일</span>
+        <input autofocus autocomplete="email" class="_field --obj-field -light" maxlength="50" minlength="8" name="email" spellcheck="false" type="email">
+        <span class="_warning">올바른 이메일을 입력해 주세요.</span>
+    </label>
+    <label class="--obj-label" data-id="password">
+        <span class="_text">비밀번호</span>
+        <input autocomplete="password" class="_field --obj-field -light" maxlength="50" minlength="6" name="password" spellcheck="false" type="password">
+        <input autocomplete="password" class="_field --obj-field -light" maxlength="50" minlength="6" name="passwordCheck" placeholder="비밀번호 재입력" spellcheck="false" type="password">
+        <span class="_warning">올바른 비밀번호를 입력해 주세요.</span>
+    </label>
+    <label class="--obj-label" data-id="nickname">
+        <span class="_text">닉네임</span>
+        <input autocomplete="off" class="_field --obj-field -light" maxlength="10" minlength="2" name="nickname" spellcheck="false" type="text">
+        <span class="_warning">올바른 닉네임을 입력해 주세요.</span>
+    </label>
+    <label class="--obj-label" data-id="contact">
+        <span class="_text">연락처</span>
+        <input autocomplete="off" class="_field --obj-field -light" maxlength="12" minlength="10" name="contact" placeholder="'-' 없이 입력" spellcheck="false" type="tel">
+        <span class="_warning">올바른 연락처를 입력해 주세요.</span>
+    </label>
+    <label class="--obj-check-label -light">
+        <input class="_input" name="agree" type="checkbox">
+        <span class="_box"></span>
+        <span class="_text">
+            <a href="#">서비스 이용약관</a> 및
+            <a href="#">개인정보 처리방침</a>을 읽어보았으며 이해하였고 동의합니다.
+        </span>
+    </label>
+    <button class="--obj-button -color-primary" type="submit">회원가입</button>
+    <button class="--obj-button -color-light-gray" name="cancel" type="button">취소</button>
+</form>
+<form novalidate class="recover-form" id="recoverForm">
+    <h2 class="title">계정 찾기</h2>
+    <div class="mode-container">
+        <label class="label">
+            <input class="input" name="mode" type="radio" value="email">
+            <span class="title">이메일 찾기</span>
+            <span class="text">회원가입시 입력한 연락처로 이메일을 찾습니다.</span>
+        </label>
+        <label class="label">
+            <input class="input" name="mode" type="radio" value="password">
+            <span class="title">비밀번호 재설정</span>
+            <span class="text">이메일로 비밀번호를 재설정할 수 있는 링크를 전송합니다.</span>
+        </label>
+    </div>
+    <div class="content email">
+        <span class="text">이메일을 찾기 위해 아래 정보를 입력해 주세요.</span>
+        <label class="--obj-label" data-id="contact">
+            <span class="_text">연락처</span>
+            <input autocomplete="off" class="_field --obj-field -light" maxlength="12" minlength="10" name="contact" placeholder="'-' 없이 입력" spellcheck="false" type="tel">
+            <span class="_warning">올바른 연락처를 입력해 주세요.</span>
+        </label>
+    </div>
+    <div class="content password">
+        <span class="text">비밀번호를 재설정하기 위해 아래 정보를 입력해 주세요.</span>
+        <label class="--obj-label" data-id="email">
+            <span class="_text">이메일</span>
+            <input autofocus autocomplete="email" class="_field --obj-field -light" maxlength="50" minlength="8" name="email" spellcheck="false" type="email">
+            <span class="_warning">올바른 이메일을 입력해 주세요.</span>
+        </label>
+    </div>
+    <button class="--obj-button -color-primary" type="submit">계정 찾기</button>
+    <button class="--obj-button -color-light-gray" name="cancel" type="button">취소</button>
+</form>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stopsoo.meltube.mappers.MusicUserLikeMapper">
+    <delete id="deleteMusicUserLike">
+        DELETE
+        FROM `meltube`.`music_user_likes`
+        WHERE `music_index` = #{musicIndex}
+          AND `user_email` = #{userEmail}
+        LIMIT 1
+    </delete>
+
+    <insert id="insertMusicUserLike"
+            parameterType="com.stopsoo.meltube.entities.MusicUserLikeEntity">
+        INSERT INTO `meltube`.`music_user_likes` (`music_index`, `user_email`, `created_at`)
+        VALUES (#{musicIndex}, #{userEmail}, #{createdAt})
+    </insert>
+</mapper>

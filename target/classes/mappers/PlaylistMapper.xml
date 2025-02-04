@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stopsoo.meltube.mappers.PlaylistMapper">
+    <delete id="deletePlaylist">
+        DELETE
+        FROM `meltube`.`playlists`
+        WHERE `index` = #{index}
+        LIMIT 1
+    </delete>
+
+    <insert id="insertPlaylist"
+            parameterType="com.stopsoo.meltube.entities.PlaylistEntity">
+        INSERT INTO `meltube`.`playlists` (`user_email`, `text`, `created_at`)
+        VALUES (#{userEmail}, #{text}, #{createdAt})
+    </insert>
+
+    <select id="selectMusicsByPlaylistIndex"
+            resultType="com.stopsoo.meltube.entities.MusicEntity">
+        SELECT `T2`.`index`        AS `index`,
+               `T2`.`user_email`   AS `userEmail`,
+               `T2`.`artist`       AS `artist`,
+               `T2`.`album`        AS `album`,
+               `T2`.`release_date` AS `releaseDate`,
+               `T2`.`genre`        AS `genre`,
+               `T2`.`name`         AS `name`,
+               `T2`.`lyrics`       AS `lyrics`,
+               `T2`.`youtube_id`   AS `youtubeId`,
+               `T2`.`status`       AS `status`,
+               `T2`.`created_at`   AS `createdAt`,
+               `T2`.`updated_at`   AS `updatedAt`,
+               `T2`.`is_deleted`   AS `isDeleted`
+        FROM `meltube`.`playlist_musics` AS `T1`
+                 LEFT JOIN `meltube`.`musics` AS `T2` ON `T1`.`music_index` = `T2`.`index` AND
+                                                         `T2`.`is_deleted` = FALSE
+        WHERE `T1`.`playlist_index` = #{playlistIndex}
+    </select>
+
+    <select id="selectPlaylist"
+            resultType="com.stopsoo.meltube.entities.PlaylistEntity">
+        SELECT `index`      AS `index`,
+               `user_email` AS `userEmail`,
+               `text`       AS `text`,
+               `created_at` AS `createdAt`
+        FROM `meltube`.`playlists`
+        WHERE `index` = #{index}
+        LIMIT 1
+    </select>
+
+    <select id="selectPlaylistVosByUserEmail"
+            resultType="com.stopsoo.meltube.vos.PlaylistVo">
+        SELECT `T_O`.`index`                                  AS `index`,
+               `T_O`.`user_email`                             AS `userEmail`,
+               `T_O`.`text`                                   AS `text`,
+               `T_O`.`created_at`                             AS `createdAt`,
+               (SELECT COUNT(0)
+                FROM `meltube`.`playlist_musics` AS `T_I`
+                WHERE `T_O`.`index` = `T_I`.`playlist_index`) AS `musicCount`
+        FROM `meltube`.`playlists` AS `T_O`
+        WHERE `T_O`.`user_email` = #{userEmail}
+    </select>
+
+    <update id="updatePlaylist"
+            parameterType="com.stopsoo.meltube.entities.PlaylistEntity">
+        UPDATE `meltube`.`playlists`
+        SET `text` = #{text}
+        WHERE `index` = #{index}
+        LIMIT 1
+    </update>
+</mapper>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stopsoo.meltube.mappers.PlaylistMusicMapper">
+    <delete id="deletePlaylistMusic">
+        DELETE
+        FROM `meltube`.`playlist_musics`
+        WHERE `index` = #{index}
+        LIMIT 1
+    </delete>
+
+    <insert id="insertPlaylistMusic"
+            parameterType="com.stopsoo.meltube.entities.PlaylistMusicEntity">
+        INSERT INTO `meltube`.`playlist_musics` (`playlist_index`, `music_index`, `created_at`)
+        VALUES (#{playlistIndex}, #{musicIndex}, #{createdAt})
+    </insert>
+
+    <select id="selectPlaylistMusicByPlaylistIndexAndMusicIndex"
+            resultType="com.stopsoo.meltube.entities.PlaylistMusicEntity">
+        SELECT `index`          AS `index`,
+               `playlist_index` AS `playlistIndex`,
+               `music_index`    AS `musicIndex`,
+               `created_at`     AS `createdAt`
+        FROM `meltube`.`playlist_musics`
+        WHERE `playlist_index` = #{playlistIndex}
+          AND `music_index` = #{musicIndex}
+        LIMIT 1
+    </select>
+</mapper>

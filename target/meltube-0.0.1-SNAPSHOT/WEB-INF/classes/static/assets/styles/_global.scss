@@ -1,0 +1,67 @@
+@charset "UTF-8";
+
+@mixin flex($flex_direction, $align_items, $justify_content, $gap: 0) {
+  align-items: $align_items;
+  display: flex;
+  flex-direction: $flex_direction;
+  gap: $gap;
+  justify-content: $justify_content;
+
+  > .-spring {
+    flex-grow: 1;
+    flex-shrink: 1;
+  }
+}
+
+@mixin has-tooltip() {
+  position: relative;
+
+  &:hover > .---tooltip {
+    opacity: 1;
+  }
+
+  > .---tooltip {
+    background-color: #00000075;
+    border-radius: 0.25rem;
+    color: #ffffff;
+    font-size: 0.75rem;
+    opacity: 0;
+    padding: 0.25rem 0.375rem;
+    pointer-events: none;
+    position: absolute;
+    transition-duration: 125ms;
+    transition-timing-function: ease;
+    z-index: 3;
+  }
+}
+
+@mixin has-tooltip-top-to-bottom($distance: 0.25rem) {
+  @include has-tooltip();
+
+  &:hover > .---tooltip {
+    top: calc(100% + $distance);
+  }
+
+  > .---tooltip {
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+@mixin minmaxWidth($size) {
+  width: $size;
+  min-width: $size;
+  max-width: $size;
+}
+
+@mixin minmaxHeight($size) {
+  height: $size;
+  min-height: $size;
+  max-height: $size;
+}
+
+@mixin minmaxSize($size) {
+  @include minmaxWidth($size);
+  @include minmaxHeight($size);
+}

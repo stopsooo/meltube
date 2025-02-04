@@ -1,0 +1,1043 @@
+@charset "UTF-8";
+body {
+  align-items: stretch;
+  display: flex;
+  flex-direction: row;
+  gap: 0;
+  justify-content: flex-start;
+  box-sizing: border-box;
+}
+body > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+
+#ytPlayer {
+  top: 0;
+  left: 0;
+  width: 10rem;
+  height: 10rem;
+  background-color: #ffffff;
+  pointer-events: none;
+  position: fixed;
+  z-index: -1;
+}
+
+#nav {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: flex-start;
+  width: 10rem;
+  background-color: #222324;
+  padding: 1rem;
+  user-select: none;
+}
+#nav > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#nav > .logo {
+  height: 2rem;
+  margin-bottom: 0.5rem;
+  -webkit-user-drag: none;
+}
+#nav > .menu {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  justify-content: flex-start;
+}
+#nav > .menu > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#nav > .menu:has(.item.-selected) > .title {
+  color: #ffffff;
+}
+#nav > .menu > .title {
+  font-size: 1.125rem;
+  font-weight: 500;
+}
+#nav > .menu > .item {
+  color: #a0a0a0;
+  cursor: pointer;
+  font-weight: 400;
+  margin-left: 1rem;
+  transition-duration: 125ms;
+  transition-property: color;
+  transition-timing-function: ease;
+}
+#nav > .menu > .item:hover {
+  color: #bababa;
+}
+#nav > .menu > .item:active {
+  color: lightgray;
+}
+#nav > .menu > .item.-selected {
+  color: #01d345;
+  font-weight: 500;
+}
+
+#main {
+  background-color: #222324;
+  flex-grow: 1;
+  overflow: auto;
+  position: relative;
+  scrollbar-color: #424242 #222324; /* 스크롤바 색상: 잡는거색 전체색 */
+  scrollbar-width: thin; /* 스크롤바 굵기: auto|thin|none 밖에 없음, px, rem 못줌 */
+}
+#main > .header {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  justify-content: flex-start;
+  height: 4rem;
+  box-sizing: border-box;
+  padding: 1rem 1rem 0 1rem;
+}
+#main > .header > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#main > .header > .search-form {
+  align-items: stretch;
+  display: flex;
+  flex-direction: row;
+  gap: 0;
+  justify-content: flex-start;
+  position: relative;
+}
+#main > .header > .search-form > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#main > .header > .search-form > .label > .input {
+  width: 15rem;
+  background-color: #2e3031;
+  border-radius: 999rem;
+  box-sizing: border-box;
+  padding: 0.5rem 0.875rem 0.5rem 2.375rem;
+}
+#main > .header > .search-form > .submit-button {
+  top: 50%;
+  left: 1rem;
+  pointer-events: none;
+  position: absolute;
+  transform: translateY(-50%);
+}
+#main > .header > .link-container {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 0.375rem;
+  justify-content: flex-start;
+}
+#main > .header > .link-container > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#main > .header > .link-container > .link {
+  background-color: #2e3031;
+  cursor: pointer;
+  font-size: 0.75rem;
+  padding: 0.375rem 0.5rem;
+  text-decoration: none;
+  user-select: none;
+}
+#main > .header > .link-container > .link:hover {
+  background-color: #353638;
+}
+#main > .header > .link-container > .link:active {
+  background-color: #3b3d3e;
+}
+#main > .content {
+  top: 3.5rem;
+  left: 0;
+  max-width: 0;
+  max-height: 0;
+  box-sizing: border-box;
+  opacity: 0;
+  overflow: hidden;
+  padding: 1rem;
+  pointer-events: none;
+  position: absolute;
+  transform: scale(99%);
+  transition-duration: 250ms;
+  transition-property: opacity, transform;
+  transition-timing-function: ease;
+}
+#main > .content.-visible {
+  max-width: initial;
+  max-height: initial;
+  min-width: 100%;
+  overflow: initial;
+  opacity: 1;
+  pointer-events: all;
+  transform: scale(100%);
+}
+#main > .content > .subtitle {
+  color: #9e9e9e;
+  font-size: 1rem;
+  margin-bottom: 0.125rem;
+}
+#main > .content > .title {
+  color: #ffffff;
+  font-size: 1.25rem;
+  margin-bottom: 0.75rem;
+}
+#main > .content > .button-container {
+  align-items: stretch;
+  display: flex;
+  flex-direction: row;
+  gap: 0.375rem;
+  justify-content: flex-start;
+  margin-bottom: 0.5rem;
+}
+#main > .content > .button-container > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#main > .content > .button-container > .filter-form {
+  align-items: stretch;
+  display: flex;
+  flex-direction: row;
+  gap: 0.375rem;
+  justify-content: flex-start;
+}
+#main > .content > .button-container > .filter-form > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#main > .content > .button-container > .filter-form > .--obj-label > ._field {
+  background-color: #28292b;
+  border: none;
+  border-radius: 999rem;
+  padding: 0.5rem 0.875rem;
+  transition-duration: 125ms;
+  transition-property: background-color;
+  transition-timing-function: ease;
+}
+#main > .content > .button-container > .filter-form > .--obj-label > ._field:hover {
+  background-color: #2f3032;
+}
+#main > .content > .button-container > .filter-form > .--obj-label > ._field:focus {
+  background-color: #303132;
+}
+#main > .content > .default-form {
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  justify-content: flex-start;
+  max-width: 40rem;
+}
+#main > .content > .default-form > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#main > .content > .default-form > .text {
+  text-align: justify;
+}
+#main > .content > .default-form > .button-container {
+  align-items: stretch;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  justify-content: flex-end;
+}
+#main > .content > .default-form > .button-container > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+
+#main > .content[rel="home.search"] > .init {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  justify-content: center;
+}
+#main > .content[rel="home.search"] > .init > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#main > .content[rel="home.search"] > .init > .icon {
+  color: #424242;
+  font-size: 3.75rem;
+  margin-bottom: 1rem;
+}
+#main > .content[rel="home.search"] > .init > .message {
+  color: #a0a0a0;
+  font-size: 1.125rem;
+}
+#main > .content[rel="home.search"] > .init > .message > .link {
+  color: #ffffff;
+}
+#main > .content[rel="home.search"] > .result {
+  width: 100%;
+}
+#main > .content[rel="home.search"] > .result > thead > tr > th:nth-of-type(2) {
+  width: 100%;
+}
+#main > .content[rel="home.search"] > .result > tbody > tr.message > td {
+  line-height: 200%;
+  padding: 2rem;
+  text-align: center;
+}
+#main > .content[rel="home.search"] > .result > tbody > tr.message > td > .message {
+  color: #bdbdbd;
+  display: block;
+}
+#main > .content[rel="home.search"] > .result > tbody > tr.message > td > .message > .keyword,
+#main > .content[rel="home.search"] > .result > tbody > tr.message > td > .message > .link {
+  color: #ffffff;
+  font-weight: 500;
+}
+#main > .content[rel="home.search"] > .result > tbody > tr > td > .name-wrapper {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: flex-start;
+  font-weight: 500;
+}
+#main > .content[rel="home.search"] > .result > tbody > tr > td > .name-wrapper > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#main > .content[rel="home.search"] > .result > tbody > tr > td > .name-wrapper > .cover {
+  width: 2.25rem;
+  height: 2.25rem;
+  object-fit: cover;
+  object-position: center;
+}
+#main > .content[rel="home.search"] > .result > tbody > tr > td > .like-wrapper {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  justify-content: flex-start;
+  cursor: pointer;
+}
+#main > .content[rel="home.search"] > .result > tbody > tr > td > .like-wrapper > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#main > .content[rel="home.search"] > .result > tbody > tr > td > .like-wrapper.-liked {
+  color: #01d345;
+}
+
+#main > .content[rel="mymusic.like"] > .--obj-table > tbody > tr > td > .like-wrapper {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  justify-content: flex-start;
+  cursor: pointer;
+}
+#main > .content[rel="mymusic.like"] > .--obj-table > tbody > tr > td > .like-wrapper > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#main > .content[rel="mymusic.like"] > .--obj-table > tbody > tr > td > .like-wrapper.-liked {
+  color: #01d345;
+}
+#main > .content[rel="mymusic.like"] > .--obj-table > tbody > tr > td > .name-wrapper {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: flex-start;
+  font-weight: 500;
+}
+#main > .content[rel="mymusic.like"] > .--obj-table > tbody > tr > td > .name-wrapper > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#main > .content[rel="mymusic.like"] > .--obj-table > tbody > tr > td > .name-wrapper > .cover {
+  width: 2.25rem;
+  height: 2.25rem;
+  object-fit: cover;
+  object-position: center;
+}
+
+#main > .content[rel="mymusic.playlist"] > .split {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: flex-start;
+}
+#main > .content[rel="mymusic.playlist"] > .split > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#main > .content[rel="mymusic.playlist"] > .split > .pane {
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  justify-content: flex-start;
+}
+#main > .content[rel="mymusic.playlist"] > .split > .pane > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#main > .content[rel="mymusic.playlist"] > .split > .pane.playlist {
+  width: 40rem;
+  min-width: 40rem;
+  max-width: 40rem;
+  height: 40rem;
+  min-height: 40rem;
+  max-height: 40rem;
+}
+#main > .content[rel="mymusic.playlist"] > .split > .pane.playlist > .--obj-table > tbody > tr > td > .button-container {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 0.15rem;
+  justify-content: flex-start;
+}
+#main > .content[rel="mymusic.playlist"] > .split > .pane.playlist > .--obj-table > tbody > tr > td > .button-container > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#main > .content[rel="mymusic.playlist"] > .split > .pane.playlist > .--obj-table > tbody > tr > td > .button-container > .--obj-button {
+  position: relative;
+}
+#main > .content[rel="mymusic.playlist"] > .split > .pane.playlist > .--obj-table > tbody > tr > td > .button-container > .--obj-button:hover > .---tooltip {
+  opacity: 1;
+}
+#main > .content[rel="mymusic.playlist"] > .split > .pane.playlist > .--obj-table > tbody > tr > td > .button-container > .--obj-button > .---tooltip {
+  background-color: rgba(0, 0, 0, 0.4588235294);
+  border-radius: 0.25rem;
+  color: #ffffff;
+  font-size: 0.75rem;
+  opacity: 0;
+  padding: 0.25rem 0.375rem;
+  pointer-events: none;
+  position: absolute;
+  transition-duration: 125ms;
+  transition-timing-function: ease;
+  z-index: 3;
+}
+#main > .content[rel="mymusic.playlist"] > .split > .pane.playlist > .--obj-table > tbody > tr > td > .button-container > .--obj-button:hover > .---tooltip {
+  top: calc(100% + 0.25rem);
+}
+#main > .content[rel="mymusic.playlist"] > .split > .pane.playlist > .--obj-table > tbody > tr > td > .button-container > .--obj-button > .---tooltip {
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+#main > .content[rel="mymusic.playlist"] > .split > .pane.music {
+  flex-grow: 1;
+}
+#main > .content[rel="mymusic.playlist"] > .split > .pane.music > .--obj-table > tbody > tr > td > .name-wrapper {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: flex-start;
+  font-weight: 500;
+}
+#main > .content[rel="mymusic.playlist"] > .split > .pane.music > .--obj-table > tbody > tr > td > .name-wrapper > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#main > .content[rel="mymusic.playlist"] > .split > .pane.music > .--obj-table > tbody > tr > td > .name-wrapper > .cover {
+  width: 2.25rem;
+  height: 2.25rem;
+  object-fit: cover;
+  object-position: center;
+}
+#main > .content[rel="mymusic.playlist"] > .split > .pane > .title {
+  font-size: 1.125rem;
+}
+#main > .content[rel="mymusic.playlist"] > .split > .pane > .button-container {
+  align-items: stretch;
+  display: flex;
+  flex-direction: row;
+  gap: 0.375rem;
+  justify-content: flex-start;
+}
+#main > .content[rel="mymusic.playlist"] > .split > .pane > .button-container > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#main > .content[rel="mymusic.playlist"] > .split > .pane > .--obj-table > tbody > tr.message > td {
+  color: #a0a0a0;
+  padding: 2rem;
+  text-align: center;
+}
+
+#main > .content[rel="mymusic.register"] > form > .melon > .row {
+  align-items: stretch;
+  display: flex;
+  flex-direction: row;
+  gap: 0.375rem;
+  justify-content: flex-start;
+  position: relative;
+}
+#main > .content[rel="mymusic.register"] > form > .melon > .row > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#main > .content[rel="mymusic.register"] > form > .melon > .row > [name=melonKeyword] {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#main > .content[rel="mymusic.register"] > form > .melon > .row > [name=melonKeyword]:focus ~ .result {
+  top: calc(100% + 0.375rem);
+  opacity: 1;
+  pointer-events: all;
+}
+#main > .content[rel="mymusic.register"] > form > .melon > .row > [name=melonId] {
+  width: 11.25rem;
+  box-sizing: border-box;
+  letter-spacing: 0.25rem;
+  text-align: center;
+}
+#main > .content[rel="mymusic.register"] > form > .melon > .row > .result {
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  justify-content: flex-start;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  backdrop-filter: blur(1rem);
+  background-color: rgba(34, 35, 36, 0.7529411765);
+  border: 0.0625rem solid #424242;
+  box-sizing: border-box;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  transition-duration: 250ms;
+  transition-property: top, opacity;
+  transition-timing-function: ease;
+  user-select: none;
+  z-index: 1;
+}
+#main > .content[rel="mymusic.register"] > form > .melon > .row > .result > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#main > .content[rel="mymusic.register"] > form > .melon > .row > .result > .message {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: center;
+  color: #a0a0a0;
+  padding: 1.5rem;
+}
+#main > .content[rel="mymusic.register"] > form > .melon > .row > .result > .message > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+@keyframes anim {
+  from {
+    transform: rotateZ(0deg);
+  }
+  to {
+    transform: rotateZ(360deg);
+  }
+}
+#main > .content[rel="mymusic.register"] > form > .melon > .row > .result > .message.loading > .icon {
+  animation-name: anim;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+#main > .content[rel="mymusic.register"] > form > .melon > .row > .result > .message > .icon {
+  font-size: 1.25rem;
+}
+#main > .content[rel="mymusic.register"] > form > .melon > .row > .result > .item {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 0.75rem;
+  justify-content: flex-start;
+  background-color: rgba(255, 255, 255, 0);
+  cursor: pointer;
+  padding: 0.5rem;
+  user-select: none;
+}
+#main > .content[rel="mymusic.register"] > form > .melon > .row > .result > .item > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#main > .content[rel="mymusic.register"] > form > .melon > .row > .result > .item:hover {
+  background-color: rgba(255, 255, 255, 0.0196078431);
+}
+#main > .content[rel="mymusic.register"] > form > .melon > .row > .result > .item:not(:last-child) {
+  border-bottom: 0.0625rem solid rgba(66, 66, 66, 0.3764705882);
+}
+#main > .content[rel="mymusic.register"] > form > .melon > .row > .result > .item > .image {
+  width: 2.5rem;
+  min-width: 2.5rem;
+  max-width: 2.5rem;
+  height: 2.5rem;
+  min-height: 2.5rem;
+  max-height: 2.5rem;
+}
+#main > .content[rel="mymusic.register"] > form > .melon > .row > .result > .item > .column {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  justify-content: flex-start;
+}
+#main > .content[rel="mymusic.register"] > form > .melon > .row > .result > .item > .column > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#main > .content[rel="mymusic.register"] > form > .melon > .row > .result > .item > .column > .name {
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+#main > .content[rel="mymusic.register"] > form > .melon > .row > .result > .item > .column > .artist {
+  font-size: 0.7rem;
+}
+#main > .content[rel="mymusic.register"] > form > .cover > .row {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: flex-start;
+}
+#main > .content[rel="mymusic.register"] > form > .cover > .row > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#main > .content[rel="mymusic.register"] > form > .cover > .row > .preview-wrapper {
+  width: 11.25rem;
+  min-width: 11.25rem;
+  max-width: 11.25rem;
+  height: 11.25rem;
+  min-height: 11.25rem;
+  max-height: 11.25rem;
+  border: 0.0625rem solid #424242;
+  overflow: hidden;
+  position: relative;
+}
+#main > .content[rel="mymusic.register"] > form > .cover > .row > .preview-wrapper > * {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  position: absolute;
+}
+#main > .content[rel="mymusic.register"] > form > .cover > .row > .preview-wrapper > .text {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 0;
+  justify-content: center;
+  color: #a0a0a0;
+  padding: 1rem;
+  text-align: center;
+}
+#main > .content[rel="mymusic.register"] > form > .cover > .row > .preview-wrapper > .text > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#main > .content[rel="mymusic.register"] > form > .cover > .row > .preview-wrapper > .image {
+  object-fit: cover;
+  object-position: center;
+}
+#main > .content[rel="mymusic.register"] > form > .cover > .row > .input-wrapper {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  justify-content: flex-start;
+}
+#main > .content[rel="mymusic.register"] > form > .cover > .row > .input-wrapper > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#main > .content[rel="mymusic.register"] > form > .cover > .row > .input-wrapper > .tip > code {
+  background-color: #424242;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  padding: 0.125rem 0.25rem;
+}
+#main > .content[rel="mymusic.register"] > form > .youtube > .row {
+  align-items: stretch;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: flex-start;
+}
+#main > .content[rel="mymusic.register"] > form > .youtube > .row > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#main > .content[rel="mymusic.register"] > form > .youtube > .row > .input-wrapper {
+  width: 11.25rem;
+  min-width: 11.25rem;
+  max-width: 11.25rem;
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  justify-content: flex-start;
+}
+#main > .content[rel="mymusic.register"] > form > .youtube > .row > .input-wrapper > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#main > .content[rel="mymusic.register"] > form > .youtube > .row > .input-wrapper > [name=youtubeId] {
+  letter-spacing: 0.25rem;
+  text-align: center;
+}
+#main > .content[rel="mymusic.register"] > form > .youtube > .row > .iframe-wrapper {
+  aspect-ratio: 16/9;
+  border: 0.0625rem solid #424242;
+  flex-grow: 1;
+  position: relative;
+}
+#main > .content[rel="mymusic.register"] > form > .youtube > .row > .iframe-wrapper > * {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+#main > .content[rel="mymusic.register"] > form > .youtube > .row > .iframe-wrapper > .text {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 0;
+  justify-content: center;
+  color: #a0a0a0;
+  text-align: center;
+}
+#main > .content[rel="mymusic.register"] > form > .youtube > .row > .iframe-wrapper > .text > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#main > .content[rel="mymusic.register"] > form > .youtube > .row > .iframe-wrapper > .iframe {
+  border: none;
+}
+#main > .content[rel="mymusic.register"] > form > .--obj-label > [name=lyrics] {
+  min-height: 10rem;
+  resize: vertical;
+}
+
+#main > .content[rel="mymusic.register_history"] > table > tbody > tr > td > .cover {
+  width: 2.25rem;
+  height: 2.25rem;
+  object-fit: cover;
+  object-position: center;
+}
+
+#main > .content[rel="admin.music"] > table > tbody > tr > td.-status-allowed {
+  color: #2ecc71;
+}
+#main > .content[rel="admin.music"] > table > tbody > tr > td.-status-denied {
+  color: #ec7063;
+}
+#main > .content[rel="admin.music"] > table > tbody > tr > td > .cover-anchor {
+  width: 2.25rem;
+  height: 2.25rem;
+  display: inline-block;
+}
+#main > .content[rel="admin.music"] > table > tbody > tr > td > .cover-anchor > .cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+#main > .content[rel="admin.music"] > table > tbody > tr > td > .status-text {
+  border-radius: 0.25rem;
+  display: inline-block;
+  font-size: 0.75rem;
+  padding: 0.425rem;
+}
+
+#player {
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: flex-start;
+  width: 17.5rem;
+  background-color: #1c1d1e;
+  user-select: none;
+}
+#player > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#player > .album-wrapper {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  justify-content: center;
+  padding: 1.5rem 1rem 0 1rem;
+}
+#player > .album-wrapper > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#player > .album-wrapper.liked > .like {
+  display: none;
+}
+#player > .album-wrapper.liked > .unlike {
+  display: block;
+}
+#player > .album-wrapper > .image {
+  width: 52.5%;
+  border-radius: 0.25rem;
+  margin-bottom: 1rem;
+  -webkit-user-drag: none;
+}
+#player > .album-wrapper > .title {
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 400;
+}
+#player > .album-wrapper > .artist {
+  color: #9e9e9e;
+}
+#player > .album-wrapper > .like {
+  cursor: pointer;
+  margin-top: 0.5rem;
+}
+#player > .album-wrapper > .like:hover > .icon {
+  filter: brightness(100%);
+}
+#player > .album-wrapper > .like > .icon {
+  width: 1.375rem;
+  filter: brightness(75%);
+  transition-duration: 125ms;
+  transition-property: filter;
+  transition-timing-function: ease;
+}
+#player > .album-wrapper > .unlike {
+  cursor: pointer;
+  display: none;
+  margin-top: 0.5rem;
+}
+#player > .album-wrapper > .unlike:hover {
+  filter: brightness(90%);
+}
+#player > .album-wrapper > .unlike:active {
+  filter: brightness(80%);
+}
+#player > .album-wrapper > .unlike > .icon {
+  width: 1.375rem;
+  filter: brightness(100%);
+  transition-duration: 125ms;
+  transition-property: filter;
+  transition-timing-function: ease;
+}
+#player > .control-wrapper {
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  justify-content: flex-start;
+  padding: 0 1rem;
+}
+#player > .control-wrapper > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#player > .control-wrapper > .bar {
+  height: 0.175rem;
+  background-color: #101010;
+  cursor: pointer;
+  position: relative;
+}
+#player > .control-wrapper > .bar > .value {
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background-color: #01d345;
+  position: absolute;
+}
+#player > .control-wrapper > .time {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  margin-top: 0.125rem;
+}
+#player > .control-wrapper > .time > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#player > .control-wrapper > .time > .current {
+  color: #ffffff;
+  font-weight: 500;
+}
+#player > .control-wrapper > .button-container {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  justify-content: space-between;
+  margin-top: 0.125rem;
+}
+#player > .control-wrapper > .button-container > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#player > .control-wrapper > .button-container > .space {
+  width: 1.0625rem;
+}
+#player > .control-wrapper > .button-container > .button {
+  cursor: pointer;
+}
+#player > .control-wrapper > .button-container > .button.-toggled > .icon {
+  filter: brightness(100%);
+}
+#player > .control-wrapper > .button-container > .button > .icon {
+  width: 1.0625rem;
+  filter: brightness(50%);
+}
+#player > .control-wrapper > .button-container > .ppn {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 0.625rem;
+  justify-content: center;
+}
+#player > .control-wrapper > .button-container > .ppn > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#player > .control-wrapper > .button-container > .ppn > .button {
+  cursor: pointer;
+}
+#player > .control-wrapper > .button-container > .ppn > .button[name=play] > .icon, #player > .control-wrapper > .button-container > .ppn > .button[name=pause] > .icon {
+  width: 1.75rem;
+}
+#player > .control-wrapper > .button-container > .ppn > .button > .icon {
+  width: 1.5rem;
+}
+#player > .list-button-container {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 0.25rem;
+  justify-content: flex-start;
+  padding: 0 1rem;
+}
+#player > .list-button-container > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#player > .list-button-container > .--obj-button {
+  font-size: 0.7rem;
+  padding: 0.375rem 0.5rem;
+  position: relative;
+}
+#player > .list-button-container > .--obj-button:hover > .tooltip {
+  top: calc(100% + 0.375rem);
+  opacity: 1;
+}
+#player > .list-button-container > .--obj-button > .tooltip {
+  top: 100%;
+  left: 50%;
+  opacity: 0;
+  background-color: rgba(0, 0, 0, 0.5019607843);
+  border-radius: 0.25rem;
+  color: #ffffff;
+  font-size: 0.7rem;
+  padding: 0.25rem 0.375rem;
+  pointer-events: none;
+  position: absolute;
+  transform: translateX(-50%);
+  transition-duration: 125ms;
+  transition-property: top, opacity;
+  transition-timing-function: ease;
+}
+#player > .list {
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  justify-content: flex-start;
+  flex-grow: 1;
+  flex-shrink: 1;
+  overflow: hidden auto;
+  scrollbar-color: #424242 #222324;
+  scrollbar-width: thin;
+}
+#player > .list > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#player > .list > .item {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 0.425rem;
+  justify-content: flex-start;
+  line-height: 1;
+  padding: 0.425rem 1rem;
+}
+#player > .list > .item > .-spring {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+#player > .list > .item.-playing {
+  color: #01d345;
+  font-weight: 500;
+}
+#player > .list > .item > .check-wrapper {
+  cursor: pointer;
+}
+#player > .list > .item > .check-wrapper > .input {
+  display: none;
+}
+#player > .list > .item > .check-wrapper > .input:checked + .box {
+  background-color: #58595a;
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAACXBIWXMAAAsTAAALEwEAmpwYAAABBUlEQVR4nO3UzyoFURwH8GElyr+6PImFYkM2kpUH8ABeQdnJRmHHjh0PYWNlKSlSSimylgX3fjS5aYxj3MOZsrjf5Zzf/D7nd5o5WdbNfwiWsY1GncgkXr3nAQt1IP249DnP6E0Nbfmaw9TIFJol5BHjKZEBXAemWUqG5MFuADnIUgZzaJWQO4ymRIZwG5hmPqbJCNbz/6KiZj+A7MUgwzhtv/iE2UDNYgC5wWAMdFxqkGMzhfUG7ks1rWJNp9BJYLcfGI4C6ztRSLvRGM6/wTYDz6/y6ycaKhzPmZ/TxPSvkEhs409Ih9gF+pJAFdgLJpIhFR/IWnKkdOWsYgU9tUHdZIG8AXfnYXxwGVtiAAAAAElFTkSuQmCC");
+}
+#player > .list > .item > .check-wrapper > .box {
+  width: 0.75rem;
+  min-width: 0.75rem;
+  max-width: 0.75rem;
+  height: 0.75rem;
+  min-height: 0.75rem;
+  max-height: 0.75rem;
+  top: 0.0625rem;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 75%;
+  border: 0.125rem solid #58595a;
+  border-radius: 0.25rem;
+  display: inline-block;
+  position: relative;
+}
+#player > .list > .item > .title {
+  max-width: 60%;
+  cursor: pointer;
+  flex-grow: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#player > .list > .item > .artist {
+  max-width: 4rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/*# sourceMappingURL=index.signed.css.map */
